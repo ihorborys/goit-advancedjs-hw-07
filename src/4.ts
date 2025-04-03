@@ -4,7 +4,7 @@ class Key {
     constructor() {
         // Генеруємо випадкове 6 - значне число
         this.signature = Math.floor(100000 + Math.random() * 900000);
-        console.log('New key created');
+        console.log(`New key created: ${this.signature}`);
     }
 
     public getSignature(): number {
@@ -12,12 +12,13 @@ class Key {
     }
 }
 
+
 class Person {
     private key: Key;
 
     constructor(key: Key) {
         this.key = key;
-        console.log('Added object key to person.key');
+        // console.log('Added object key to person.key');
     }
 
     public getKey(): Key {
@@ -25,78 +26,62 @@ class Person {
     }
 }
 
+
 abstract class House {
     protected key: Key;
-    public door: boolean;
-
-    // public comeIn(): void;
-    public abstract openDoor(key: Key): boolean;
-}
-
-class MyHouse extends House {
-    public tenants: [];
+    public door: boolean = false;
+    public tenants: Person[] = [];
 
     constructor(key: Key) {
-        super();
         this.key = key;
     }
 
-    public openDoor(key: Key): boolean {
-        if (person.getKey() === key) {
-            console.log('Doors are open')
-            return this.door;
+    public abstract openDoor(key: Key): void;
+
+    public comeIn(person: Person): void {
+        if (this.door) {
+            this.tenants.push(person);
+            console.log('Person entered the house');
+        } else {
+            console.log('Door is closed. Person cannot enter.');
         }
-        return !this.door;
+    }
+}
+
+class MyHouse extends House {
+
+    constructor(key: Key) {
+        super(key);
     }
 
-    // public comeIn(person: Person) {
-    //     if (this.door) {
-    //         console.log('Welcome home');
-    //         return this.tenants.push(this.person);
-    //     }
-    //
-    //     return console.log('Sorry, wrong key')
+    public openDoor(key: Key): void {
+        if (this.key.getSignature() === key.getSignature()) {
+            this.door = true;
+            console.log('Doors are open');
+        } else {
+            console.log('Sorry, wrong key');
+        }
+    }
 
+    // public openDoor(key: Key): boolean {
+    //     if (this.door) {
+    //         this.door = true;
+    //         console.log('Doors are open')
+    //         return this.door;
+    //     }
+    //     console.log('Sorry, wrong key')
+    //     return !this.door;
+    // }
+
+    // public comeIn(person: Person) {
+    //
+    //     if (person.getKey() === key) {
+    //         this.tenants.push(person);
+    //     }
+    // }
 
 }
 
-
-// const key = new Key()
-// console.log(key)
-//
-// const person = new Person(key);
-// console.log(person.getKey())
-// console.log(person.getKey() === key)
-//
-// const house = new MyHouse();
-// console.log(house.openDoor())
-
-// const key = new Key();
-//
-// const house = new MyHouse(key);
-
-//
-// house.openDoor(person.getKey());
-//
-// house.comeIn(person);
-
-// interface IKey {
-//     signature: number;
-//
-//     getSignature(): number;
-// }
-//
-// class Key implements IKey {
-//     private signature: number;
-//
-//     constructor() {
-//         this.signature = Math.floor(100000 + Math.random() * 900000);
-//     }
-//
-//     public getSignature(): number {
-//         return this.signature;
-//     }
-// }
 
 const key = new Key();
 
@@ -104,8 +89,8 @@ const house = new MyHouse(key);
 const person = new Person(key);
 
 house.openDoor(person.getKey());
-//
-// house.comeIn(person);
+
+house.comeIn(person);
 
 
 export {};
