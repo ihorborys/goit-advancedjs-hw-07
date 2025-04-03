@@ -13,49 +13,50 @@ class Key {
 }
 
 class Person {
-    private key: {};
+    private key: Key;
 
     constructor(key: Key) {
         this.key = key;
         console.log('Added object key to person.key');
     }
 
-    public getKey(): {} {
+    public getKey(): Key {
         return this.key;
     }
 }
 
 abstract class House {
     protected key: Key;
-
     public door: boolean;
 
-    public comeIn(): void;
-
-    public abstract openDoor(key: Person): void;
+    // public comeIn(): void;
+    public abstract openDoor(key: Key): boolean;
 }
 
 class MyHouse extends House {
-    public tenant: [];
+    public tenants: [];
 
     constructor(key: Key) {
         super();
         this.key = key;
     }
 
-    public openDoor(key: Person) {
+    public openDoor(key: Key): boolean {
         if (person.getKey() === key) {
             console.log('Doors are open')
             return this.door;
         }
+        return !this.door;
     }
 
-    // public comeIn() {
+    // public comeIn(person: Person) {
     //     if (this.door) {
     //         console.log('Welcome home');
-    //         return this.tenant.push(person);
+    //         return this.tenants.push(this.person);
     //     }
-    //     console.log('Sorry, wrong key')
+    //
+    //     return console.log('Sorry, wrong key')
+
 
 }
 
