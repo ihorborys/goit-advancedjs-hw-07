@@ -18,7 +18,6 @@ class Person {
 
     constructor(key: Key) {
         this.key = key;
-        // console.log('Added object key to person.key');
     }
 
     public getKey(): Key {
@@ -28,9 +27,9 @@ class Person {
 
 
 abstract class House {
-    protected key: Key;
     public door: boolean = false;
     public tenants: Person[] = [];
+    protected key: Key;
 
     constructor(key: Key) {
         this.key = key;
@@ -48,8 +47,8 @@ abstract class House {
     }
 }
 
-class MyHouse extends House {
 
+class MyHouse extends House {
     constructor(key: Key) {
         super(key);
     }
@@ -62,31 +61,17 @@ class MyHouse extends House {
             console.log('Sorry, wrong key');
         }
     }
-
-    // public openDoor(key: Key): boolean {
-    //     if (this.door) {
-    //         this.door = true;
-    //         console.log('Doors are open')
-    //         return this.door;
-    //     }
-    //     console.log('Sorry, wrong key')
-    //     return !this.door;
-    // }
-
-    // public comeIn(person: Person) {
-    //
-    //     if (person.getKey() === key) {
-    //         this.tenants.push(person);
-    //     }
-    // }
-
 }
 
 
+// ПЕРЕВІРКИ
 const key = new Key();
+// const key2 = new Key();
 
 const house = new MyHouse(key);
+
 const person = new Person(key);
+// const person = new Person(key2);
 
 house.openDoor(person.getKey());
 
